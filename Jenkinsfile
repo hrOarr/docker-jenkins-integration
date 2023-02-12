@@ -16,8 +16,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'docker build -t spring-test .'
-                sh 'docker run -p 8080:8080 spring-test'
+                sh './deploy-with-docker.sh'
             }
         }
     }
