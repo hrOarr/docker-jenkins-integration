@@ -1,0 +1,18 @@
+version: "3"
+services:
+  mongo6:
+    image: mongo:latest
+    container_name: "mongo6"
+    ports:
+      - 27020:27017
+    networks:
+      - spring-network
+
+  dockerspringtest:
+    build: .
+    image: docker-jenkins-integration
+    container_name: "dockerspringtest"
+    ports:
+      - 9090:8080
+    networks:
+      - spring-network
