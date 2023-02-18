@@ -9,7 +9,7 @@ pipeline {
 
     environment {
         dockerPrivateRegistryProtocol = 'https'
-        dockerPrivateRegistryUrl = 'docker.io'
+        dockerPrivateRegistryUrl = 'hub.docker.com'
         dockerRegistryCredential = 'cce7e3df-5469-404a-ad0f-2ea9ebebfcd1'
         dockerImageName = 'astrodust/docker-jenkins-integration'
 
