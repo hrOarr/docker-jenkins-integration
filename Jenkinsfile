@@ -9,7 +9,7 @@ pipeline {
         stage('Docker setup') {
             steps {
                 sh 'echo $PATH'
-                sh 'export PATH=$PATH:/usr/local/bin'
+                sh 'export PATH=$PATH:/usr/bin'
             }
         }
 
