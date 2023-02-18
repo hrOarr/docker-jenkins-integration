@@ -1,8 +1,20 @@
+def DOCKER_IMAGE_TAG = params.getOrDefault("dockerImageTag", "")
+
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven-3.6'
+    parameters {
+        string(defaultValue: DOCKER_IMAGE_TAG, description: '', name: 'dockerImageTag', trim: true);
+    }
+
+    environment {
+        dockerPrivateRegistryProtocol = 'https'
+        dockerPrivateRegistryUrl = 'docker.io'
+        dockerRegistryCredential = 'cce7e3df-5469-404a-ad0f-2ea9ebebfcd1'
+        dockerImageName = 'astrodust/docker-jenkins-integration'
+
+        // don't need to change
+        envDockerImageTag = ''
     }
 
     stages {
@@ -13,23 +25,31 @@ pipeline {
         }
 
         stage('Mvn Package') {
-            steps{
-                sh "mvn clean package"
+            tools {
+                maven 'Maven-3.6'
+            }
+            steps {
+                sh "mvn -Dhttps.protocols=TLSv1.2 package"
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t astrodust/docker-jenkins-integration .'
+//                 sh 'docker build -t astrodust/docker-jenkins-integration .'
+                envDockerImageTag = docker.build dockerImageName + ":${DOCKER_IMAGE_TAG}"
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'cce7e3df-5469-404a-ad0f-2ea9ebebfcd1', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                  sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-                }
-                sh 'docker push astrodust/docker-jenkins-integration'
+//                 withCredentials([usernamePassword(credentialsId: 'cce7e3df-5469-404a-ad0f-2ea9ebebfcd1', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+//                   sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+//                 }
+//                 sh 'docker push astrodust/docker-jenkins-integration'
+                   docker.withRegistry( "${env.dockerPrivateRegistryProtocol}://${env.dockerPrivateRegistryUrl}", dockerRegistryCredential ) {
+                        // shortCommitDockerImageTag.push()
+                        envDockerImageTag.push()
+                   }
             }
         }
 
