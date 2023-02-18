@@ -11,7 +11,9 @@ pipeline {
         stage('Mvn Package') {
             def mvnHome = tool name: 'Maven-6', type: 'maven'
             def mvnCMD = "${mvnHome}/bin/mvn"
-            sh "${mvnCMD} clean package"
+            steps{
+                sh "${mvnCMD} clean package"
+            }
         }
 
         stage('Build Docker Image') {
@@ -33,7 +35,6 @@ pipeline {
         stage('Deploy Docker Container') {
             steps {
                 sh 'docker run -d -p 8080:8080 docker-home/docker-jenkins-integration'
-              }
             }
         }
     }
