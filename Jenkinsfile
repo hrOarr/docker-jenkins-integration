@@ -35,21 +35,21 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-//                 sh 'docker build -t astrodust/docker-jenkins-integration .'
+                // sh 'docker build -t astrodust/docker-jenkins-integration .'
                 envDockerImageTag = docker.build dockerImageName + ":${DOCKER_IMAGE_TAG}"
             }
         }
 
         stage('Push Docker Image') {
             steps {
-//                 withCredentials([usernamePassword(credentialsId: 'cce7e3df-5469-404a-ad0f-2ea9ebebfcd1', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-//                   sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-//                 }
-//                 sh 'docker push astrodust/docker-jenkins-integration'
-                   docker.withRegistry( "${env.dockerPrivateRegistryProtocol}://${env.dockerPrivateRegistryUrl}", dockerRegistryCredential ) {
-                        // shortCommitDockerImageTag.push()
-                        envDockerImageTag.push()
-                   }
+                // withCredentials([usernamePassword(credentialsId: 'cce7e3df-5469-404a-ad0f-2ea9ebebfcd1', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                // sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                // }
+                // sh 'docker push astrodust/docker-jenkins-integration'
+                docker.withRegistry( "${env.dockerPrivateRegistryProtocol}://${env.dockerPrivateRegistryUrl}", dockerRegistryCredential ) {
+                    // shortCommitDockerImageTag.push()
+                    envDockerImageTag.push()
+                }
             }
         }
 
