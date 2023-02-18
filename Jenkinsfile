@@ -6,6 +6,13 @@ pipeline {
     }
 
     stages {
+        stage('Docker setup') {
+            steps {
+                sh 'echo $PATH'
+                sh 'export PATH=$PATH:/usr/local/bin'
+            }
+        }
+
         stage('Git Checkout') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '95d711d7-6c13-4325-9a67-84f120243319', url: 'https://github.com/hrOarr/docker-jenkins-integration.git']]])
