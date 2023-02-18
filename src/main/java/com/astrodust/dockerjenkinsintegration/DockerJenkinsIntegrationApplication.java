@@ -2,6 +2,7 @@ package com.astrodust.dockerjenkinsintegration;
 
 import com.astrodust.dockerjenkinsintegration.entity.Book;
 import com.astrodust.dockerjenkinsintegration.repository.BookRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +13,7 @@ import java.util.List;
 @SpringBootApplication
 @RestController
 @RequestMapping("/book")
+@Slf4j
 public class DockerJenkinsIntegrationApplication {
 
     @Autowired
