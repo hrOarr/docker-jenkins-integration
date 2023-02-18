@@ -35,8 +35,10 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                // sh 'docker build -t astrodust/docker-jenkins-integration .'
-                envDockerImageTag = docker.build dockerImageName + ":${DOCKER_IMAGE_TAG}"
+                script {
+                    // sh 'docker build -t astrodust/docker-jenkins-integration .'
+                    envDockerImageTag = docker.build dockerImageName + ":${DOCKER_IMAGE_TAG}"
+                }
             }
         }
 
@@ -46,9 +48,11 @@ pipeline {
                 // sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
                 // }
                 // sh 'docker push astrodust/docker-jenkins-integration'
-                docker.withRegistry( "${env.dockerPrivateRegistryProtocol}://${env.dockerPrivateRegistryUrl}", dockerRegistryCredential ) {
-                    // shortCommitDockerImageTag.push()
-                    envDockerImageTag.push()
+                script{
+                    docker.withRegistry( "${env.dockerPrivateRegistryProtocol}://${env.dockerPrivateRegistryUrl}", dockerRegistryCredential ) {
+                        // shortCommitDockerImageTag.push()
+                        envDockerImageTag.push()
+                    }
                 }
             }
         }
