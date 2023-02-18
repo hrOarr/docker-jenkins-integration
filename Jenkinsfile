@@ -30,7 +30,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t docker-jenkins-integration .'
+                sh 'docker build -t astrodust/docker-jenkins-integration .'
             }
         }
 
@@ -39,14 +39,13 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'cce7e3df-5469-404a-ad0f-2ea9ebebfcd1', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                   sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
                 }
-                sh 'docker tag docker-jenkins-integration docker-home/docker-jenkins-integration'
-                sh 'docker push docker-home/docker-jenkins-integration'
+                sh 'docker push astrodust/docker-jenkins-integration'
             }
         }
 
         stage('Deploy Docker Container') {
             steps {
-                sh 'docker run -d -p 8080:8080 docker-home/docker-jenkins-integration'
+                sh 'docker run -d -p 8080:8080 astrodust/docker-jenkins-integration'
             }
         }
     }
