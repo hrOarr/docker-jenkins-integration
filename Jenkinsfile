@@ -49,7 +49,7 @@ pipeline {
                 // }
                 // sh 'docker push astrodust/docker-jenkins-integration'
                 script{
-                    docker.withRegistry( "${env.dockerPrivateRegistryProtocol}://${env.dockerPrivateRegistryUrl}", dockerRegistryCredential ) {
+                    docker.withRegistry( '', dockerRegistryCredential ) {
                         // shortCommitDockerImageTag.push()
                         envDockerImageTag.push()
                     }
