@@ -2,20 +2,10 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven-6'
-    }
-
-    environment {
-        PATH = "$PATH:/usr/bin"
+        maven 'Maven-3.6'
     }
 
     stages {
-        stage('Docker setup') {
-            steps {
-                sh 'echo $PATH'
-            }
-        }
-
         stage('Git Checkout') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '95d711d7-6c13-4325-9a67-84f120243319', url: 'https://github.com/hrOarr/docker-jenkins-integration.git']]])
