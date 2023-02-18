@@ -5,11 +5,14 @@ pipeline {
         maven 'Maven-6'
     }
 
+    environment {
+        PATH = "$PATH:/usr/bin"
+    }
+
     stages {
         stage('Docker setup') {
             steps {
                 sh 'echo $PATH'
-                sh 'export PATH=$PATH:/usr/bin'
             }
         }
 
