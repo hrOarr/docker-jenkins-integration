@@ -53,6 +53,7 @@ pipeline {
 
     environment {
         // docker related variables
+        dockerRegistryCredential = '<docker-credential-from-jenkins>'
         dockerImageName = '<username>/<image-name>' // example - astrodust/docker-jenkins-integration
 
         // don't need to change
