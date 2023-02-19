@@ -8,6 +8,7 @@ pipeline {
     }
 
     environment {
+        // docker related variables
         dockerRegistryProtocol = 'https'
         dockerRegistryUrl = 'hub.docker.com'
         dockerRegistryCredential = 'cce7e3df-5469-404a-ad0f-2ea9ebebfcd1'
